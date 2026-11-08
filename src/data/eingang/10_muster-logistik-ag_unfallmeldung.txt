@@ -1,0 +1,35 @@
+Muster Logistik AG
+Personaldienst
+Beispielweg 20, 9993 Musterhausen
+
+An: Unfallversicherer, Leistungsabteilung UVG
+
+Musterhausen, 07.10.2026
+
+UNFALLMELDUNG UVG
+
+Arbeitgeber
+Firma:                  Muster Logistik AG
+Adresse:                Beispielweg 20, 9993 Musterhausen
+
+Versicherte Person
+Name:                   Keller Sarah
+Geburtsdatum:           14.02.1990
+Adresse:                Probestrasse 11, 9994 Hügelwil
+Funktion:               Disponentin
+Beschäftigungsgrad:     80 %
+
+Angaben zum Unfall
+Art:                    Berufsunfall
+Unfalldatum:            05.10.2026, ca. 16:20 Uhr
+Unfallort:              Lager, Rampe 3
+Hergang:                Beim Öffnen eines Kartons mit dem Teppichmesser
+                        abgerutscht und in den linken Zeigefinger geschnitten.
+Verletzter Körperteil:  Zeigefinger links
+Erstbehandlung:         Praxis am Lindenplatz
+Arbeit ausgesetzt:      nein
+
+Kontaktperson:          Karin Bachmann, Personaldienst
+E-Mail:                 personal@muster-logistik-ag.example
+
+FIKTIVES TESTDOKUMENT – Hackathon-Prototyp

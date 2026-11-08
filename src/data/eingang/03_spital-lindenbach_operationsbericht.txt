@@ -1,0 +1,39 @@
+Spital Lindenbach | Chirurgische Klinik
+Spitalweg 5 | 9992 Lindenbach
+GLN 7609999102233 | ZSR Z990223
+============================================================
+
+Lindenbach, 13.10.2026
+
+OPERATIONSBERICHT
+
+Betrifft:         Bruner Lukas, geb. 23.06.1988
+Ereignis am:      12.10.2026
+Operationsdatum:  13.10.2026
+Operateur:        Dr. med. Martin Vogt
+Assistenz:        Dr. med. Nicole Amrein
+Anästhesie:       Plexusanästhesie
+
+-- Diagnose --
+Distale Radiusfraktur links, extraartikulär, mit dorsaler Abkippung
+
+-- Eingriff --
+Offene Reposition und palmare Plattenosteosynthese des distalen Radius links
+
+-- Indikation --
+Dislozierte Fraktur mit dorsaler Abkippung, operative Stabilisierung
+angezeigt.
+
+-- Lagerung und Vorgehen --
+Rückenlage, Arm auf dem Armtisch. Palmarer Zugang, Darstellung und Reposition
+der Fraktur unter Bildwandlerkontrolle, Fixation mit winkelstabiler Platte.
+Stellungskontrolle im Bildwandler, schichtweiser Wundverschluss, steriler
+Verband und Gipsschiene.
+
+-- Procedere --
+Hochlagern, Fingermobilisation ab sofort, Röntgenkontrolle nach 6 Wochen.
+
+Dr. med. Martin Vogt, Chefarzt Chirurgie
+(elektronisch visiert)
+
+FIKTIVES TESTDOKUMENT – Hackathon-Prototyp

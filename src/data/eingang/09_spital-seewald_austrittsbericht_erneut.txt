@@ -1,0 +1,64 @@
+SPITAL SEEWALD
+Klinik für Orthopädie und Traumatologie
+Seewaldstrasse 1 · 9991 Seewald
+GLN 7609999101175 · ZSR Z990117  
+
+Unfallversicherer
+Leistungsabteilung UVG
+Postfach
+9990 Musterhausen
+
+Seewald, 6. Oktober 2026  
+
+AUSTRITTSBERICHT
+
+Patient:        Herr Reto Buehler, geb. 07.05.1971
+Adresse:        Platzhalterstrasse 47, 9996 Fiktivikon
+Unfall vom:     02.10.2026
+Hospitalisation: 02.10.2026 bis 06.10.2026  
+
+Sehr geehrte Damen und Herren
+
+Wir berichten Ihnen über den oben genannten Patienten.
+
+Diagnosen
+1. Bimalleoläre OSG-Fraktur rechts (Typ Weber B)  
+2. Nikotinkonsum
+
+Operation
+03.10.2026: Offene Reposition und Plattenosteosynthese der Fibula sowie
+Zugschraubenosteosynthese des Innenknöchels rechts
+
+Anamnese  
+Beim Abladen von einer Laderampe misstreten und mit dem rechten Fuss
+umgeknickt. Notfallmässige Vorstellung am Unfalltag.
+
+Befund bei Eintritt
+Starke Schwellung und Hämatom am rechten Sprunggelenk medial und lateral,
+Belastung nicht möglich, Durchblutung und Sensibilität intakt.
+
+Verlauf
+Der Eingriff verlief komplikationslos. Postoperativ reizlose Wundverhältnisse,
+Schmerzen unter oraler Schmerztherapie gut kontrolliert. Mobilisation unter
+physiotherapeutischer Anleitung. Austritt in gutem Allgemeinzustand nach
+Hause.
+
+Procedere  
+Teilbelastung mit 15 kg an Gehstöcken für 6 Wochen, Thromboseprophylaxe,
+Röntgenkontrolle nach 6 Wochen. Fadenentfernung 14 Tage postoperativ beim
+Hausarzt.
+
+Medikation bei Austritt
+Paracetamol 1 g bis 4× täglich, Ibuprofen 400 mg bei Bedarf bis 3× täglich,
+Enoxaparin 40 mg s.c. 1× täglich während der Teilbelastung  
+
+Arbeitsunfähigkeit
+100 % vom 02.10.2026 bis voraussichtlich 27.11.2026.
+
+Freundliche Grüsse
+
+
+Dr. med. Andrea Seiler              med. pract. Lea Hofer
+Leitende Ärztin                     Assistenzärztin
+
+FIKTIVES TESTDOKUMENT – Hackathon-Prototyp

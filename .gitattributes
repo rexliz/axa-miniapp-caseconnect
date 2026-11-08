@@ -1,0 +1,8 @@
+# Quelltext mit LF-Zeilenenden, auch auf Windows
+* text=auto eol=lf
+
+# Generierte Mockdaten byte-genau speichern (Szenario 9 enthält absichtlich Windows-Zeilenenden,
+# und der Determinismus-Test vergleicht Bytes)
+src/data/** -text
+*.xlsx binary
+src/vendor/** -text

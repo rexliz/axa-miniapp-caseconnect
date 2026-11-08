@@ -1,0 +1,24 @@
+RADIOLOGIE MUSTERPARK
+Institut für bildgebende Diagnostik
+Musterparkstrasse 8 · 9993 Musterhausen · GLN 7609999105524 · ZSR Z990552
+
+RADIOLOGIEBEFUND
+
+Patient:            Meier Daniel
+Untersuchung vom:   20.10.2026
+Untersuchung:       Röntgen OSG links in 2 Ebenen
+
+Klinische Angaben:
+Status nach Unfall, Schmerzen Sprunggelenk links. Frage nach Fraktur.
+
+Befund:
+Keine Fraktur, regelrechte Gelenkstellung. Ausgeprägte Weichteilschwellung
+lateral.
+
+Beurteilung:
+Kein Frakturnachweis. Weichteilbefund passend zu einer Bandverletzung.
+
+Befundet durch: Dr. med. Petra Lanz, Fachärztin für Radiologie
+Musterhausen, 20.10.2026
+
+FIKTIVES TESTDOKUMENT – Hackathon-Prototyp

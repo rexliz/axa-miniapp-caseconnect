@@ -1,0 +1,13 @@
+﻿schaden_nr;vorname;nachname;geburtsdatum;unfalldatum;falltyp;arbeitgeber;leistungserbringer;leistungserbringer_gln;leistungserbringer_zsr;sachbearbeitung
+UV-2026-10417;Sarah;Keller;14.02.1990;05.10.2026;Bagatellunfall;Muster Logistik AG;Praxis am Lindenplatz;7609999103315;Z990331;A. Graber
+UV-2026-11872;Reto;Bühler;07.05.1971;02.10.2026;Unfall mit Hospitalisation;Beispiel Bau GmbH;Spital Seewald;7609999101175;Z990117;L. Gerber
+UV-2026-12093;Daniel;Meier;14.11.1979;01.10.2026;Unfall mit Arbeitsunfähigkeit;Fiktiva Gastro AG;Hausarztpraxis Sonnenrain;7609999104466;Z990446;M. Roth
+UV-2026-12304;Lukas;Brunner;23.06.1988;12.10.2026;Unfall mit Hospitalisation;Seewald Elektro AG;Spital Lindenbach;7609999102233;Z990223;A. Graber
+UV-2026-12650;Daniel;Meier;03.09.1992;19.10.2026;Bagatellunfall;Testwerk Maschinen AG;Permanence Musterhausen Bahnhof;7609999106682;Z990668;M. Roth
+UV-2026-13018;Anna;Schmid;28.03.1985;08.10.2026;Unfall mit Arbeitsunfähigkeit;Lindenbach Treuhand GmbH;Praxis am Lindenplatz;7609999103315;Z990331;L. Gerber
+UV-2026-13181;Laura;Widmer;30.11.1984;15.10.2026;Unfall mit Arbeitsunfähigkeit;Demo Detailhandel AG;Hausarztpraxis Sonnenrain;7609999104466;Z990446;A. Graber
+UV-2026-13455;Simon;Kälin;09.08.1996;06.10.2026;Unfall mit Arbeitsunfähigkeit;Muster Logistik AG;Hausarztpraxis Sonnenrain;7609999104466;Z990446;M. Roth
+UV-2026-13702;Monika;Zürcher;17.01.1968;21.10.2026;Unfall mit Hospitalisation;Platzhalter Reinigung GmbH;Spital Seewald;7609999101175;Z990117;S. Ammann
+UV-2026-14026;Marco;Huber;02.12.2001;26.10.2026;Bagatellunfall;Beispiel Bau GmbH;Permanence Musterhausen Bahnhof;7609999106682;Z990668;S. Ammann
+UV-2026-14239;Fabienne;Lüthi;11.04.1977;13.10.2026;Unfall mit Arbeitsunfähigkeit;Fiktiva Gastro AG;Praxis am Lindenplatz;7609999103315;Z990331;S. Ammann
+UV-2026-14517;Stefan;Graf;25.07.1963;29.09.2026;Unfall mit Hospitalisation;Testwerk Maschinen AG;Spital Lindenbach;7609999102233;Z990223;L. Gerber

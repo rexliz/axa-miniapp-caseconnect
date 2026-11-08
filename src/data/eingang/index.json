@@ -1,0 +1,89 @@
+{
+  "beschreibung": "Demo-Posteingang: 10 fiktive Berichte, je ein Szenario. Erwartete Ergebnisse dienen den automatischen Tests.",
+  "hinweis": "FIKTIVES TESTDOKUMENT – Hackathon-Prototyp",
+  "berichte": [
+    {
+      "szenario": 1,
+      "datei": "01_praxis-am-lindenplatz_arztzeugnis.txt",
+      "titel": "Arztzeugnis mit Schaden-Nr.",
+      "erwartet": "automatisch",
+      "erwartet_schaden_nr": "UV-2026-10417",
+      "erwartet_dokumenttyp": "arztzeugnis"
+    },
+    {
+      "szenario": 2,
+      "datei": "02_spital-seewald_austrittsbericht.txt",
+      "titel": "Austrittsbericht ohne Schaden-Nr., mit Name, Geburtsdatum und Unfalldatum",
+      "erwartet": "automatisch",
+      "erwartet_schaden_nr": "UV-2026-11872",
+      "erwartet_dokumenttyp": "austrittsbericht"
+    },
+    {
+      "szenario": 3,
+      "datei": "03_spital-lindenbach_operationsbericht.txt",
+      "titel": "Operationsbericht mit Tippfehler im Namen («Bruner» statt «Brunner»)",
+      "erwartet": "automatisch",
+      "erwartet_schaden_nr": "UV-2026-12304",
+      "erwartet_dokumenttyp": "operationsbericht"
+    },
+    {
+      "szenario": 4,
+      "datei": "04_hausarztpraxis-sonnenrain_arztzeugnis.txt",
+      "titel": "Bericht zu einer von zwei gleichnamigen Personen (Daniel Meier), mit Geburtsdatum",
+      "erwartet": "automatisch",
+      "erwartet_schaden_nr": "UV-2026-12093",
+      "erwartet_dokumenttyp": "arztzeugnis"
+    },
+    {
+      "szenario": 5,
+      "datei": "05_radiologie-musterpark_radiologiebefund.txt",
+      "titel": "Bericht zum gleichen Namen ohne Geburtsdatum und ohne Unfalldatum",
+      "erwartet": "triage",
+      "erwartet_schaden_nr": null,
+      "erwartet_dokumenttyp": "radiologiebefund",
+      "korrekter_fall": "UV-2026-12093"
+    },
+    {
+      "szenario": 6,
+      "datei": "06_praxis-am-lindenplatz_arztzeugnis.txt",
+      "titel": "Bericht zu einer unbekannten Person",
+      "erwartet": "triage",
+      "erwartet_schaden_nr": null,
+      "erwartet_dokumenttyp": "arztzeugnis"
+    },
+    {
+      "szenario": 7,
+      "datei": "07_hausarztpraxis-sonnenrain_verlaufsbericht.txt",
+      "titel": "Schaden-Nr. passt nicht zum Namen (Nummer von Anna Schmid, Bericht zu Laura Widmer)",
+      "erwartet": "widerspruch",
+      "erwartet_schaden_nr": null,
+      "erwartet_dokumenttyp": "verlaufsbericht",
+      "korrekter_fall": "UV-2026-13181"
+    },
+    {
+      "szenario": 8,
+      "datei": "08_hausarztpraxis-sonnenrain_verlaufsbericht.txt",
+      "titel": "Verlaufsbericht nur mit Name und Unfalldatum",
+      "erwartet": "vorschlag",
+      "erwartet_schaden_nr": "UV-2026-13455",
+      "erwartet_dokumenttyp": "verlaufsbericht"
+    },
+    {
+      "szenario": 9,
+      "datei": "09_spital-seewald_austrittsbericht_erneut.txt",
+      "titel": "Exaktes Duplikat von Bericht 2 (erneut gesendet)",
+      "erwartet": "duplikat",
+      "erwartet_schaden_nr": null,
+      "erwartet_dokumenttyp": "austrittsbericht",
+      "duplikat_von_szenario": 2
+    },
+    {
+      "szenario": 10,
+      "datei": "10_muster-logistik-ag_unfallmeldung.txt",
+      "titel": "Unfallmeldung vom Arbeitgeber",
+      "erwartet": "automatisch",
+      "erwartet_schaden_nr": "UV-2026-10417",
+      "erwartet_dokumenttyp": "unfallmeldung"
+    }
+  ]
+}
