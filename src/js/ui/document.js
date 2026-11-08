@@ -3,6 +3,7 @@ import { aendern, aktiv } from '../state.js';
 import { DOKUMENTTYPEN } from '../config.js';
 import { formatCh, formatChZeit } from '../core/dates.js';
 import { h, statusBadge, toast } from './dom.js';
+import { quittungsKarte } from './receipt.js';
 
 export const FELD_LABEL = {
   dokumenttyp: 'Dokumenttyp',
@@ -190,6 +191,7 @@ export function renderDokument(container, id) {
         legende(d.extraktion.fundstellen),
         markierterText(d.text, d.extraktion.fundstellen)),
       h('div', { class: 'dok-seite' },
+        quittungsKarte(d),
         merkmale(d),
         d.status !== 'duplikat' ? kandidatenKarte(d, faelleNachNr) : null,
         weitereAktionen(d, ds.faelle))),

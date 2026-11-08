@@ -39,10 +39,14 @@ export async function kopieren(text) {
     await navigator.clipboard.writeText(text);
     return true;
   } catch {
-    const ta = h('textarea', { class: 'visually-hidden', 'aria-hidden': 'true' });
+    // Fallback (z. B. ohne Berechtigung oder in älteren Browsern): unsichtbares Textfeld markieren und kopieren
+    const vorher = /** @type {HTMLElement|null} */ (document.activeElement);
+    const ta = h('textarea', { class: 'visually-hidden', 'aria-hidden': 'true', readonly: true });
     ta.value = text;
     document.body.append(ta);
+    ta.focus();
     ta.select();
+    ta.setSelectionRange(0, text.length);
     let ok = false;
     try {
       ok = document.execCommand('copy');
@@ -50,6 +54,7 @@ export async function kopieren(text) {
       ok = false;
     }
     ta.remove();
+    vorher?.focus?.();
     return ok;
   }
 }
