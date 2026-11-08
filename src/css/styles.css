@@ -244,6 +244,199 @@ p { margin: 0 0 .75em; }
 /* --- KPI-Leiste (Platzhalter, Inhalt folgt) ----------------------------- */
 .kpi-bar:empty { display: none; }
 
+/* --- Hilfsklassen ------------------------------------------------------- */
+.mono { font-family: var(--font-mono); font-size: .92em; }
+.nowrap { white-space: nowrap; }
+.zurueck { margin: 0 0 .75rem; }
+.zurueck a { text-decoration: none; font-weight: 500; }
+.zurueck a:hover { text-decoration: underline; }
+
+.btn--ghost {
+  background: transparent;
+  border-color: rgb(255 255 255 / 55%);
+  color: var(--c-on-accent);
+}
+.btn--ghost:hover { background: rgb(255 255 255 / 12%); border-color: var(--c-on-accent); }
+.btn-link {
+  background: none;
+  border: 0;
+  padding: 0;
+  font: inherit;
+  color: var(--c-accent);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* --- Ansichtskopf ------------------------------------------------------- */
+.view-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+.view-head h1 { margin-bottom: .15rem; }
+.view-head p { margin: 0; }
+.view-head h1:focus { outline: none; }
+.actions { display: flex; gap: .5rem; flex-wrap: wrap; align-items: center; }
+
+/* --- Datensatz-Umschalter (Segmented Control im Header) ----------------- */
+.segmented {
+  display: inline-flex;
+  border: 1px solid rgb(255 255 255 / 55%);
+  border-radius: var(--radius-sm);
+  padding: 2px;
+  margin: 0;
+  gap: 2px;
+}
+.segmented input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+}
+.segmented label {
+  padding: .35rem .75rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: .9rem;
+  font-weight: 500;
+  color: var(--c-on-accent);
+}
+.segmented label:hover { background: rgb(255 255 255 / 12%); }
+.segmented input:checked + label { background: var(--c-on-accent); color: var(--c-accent); }
+.segmented input:focus-visible + label { outline: 3px solid #8cb8ff; outline-offset: 1px; }
+
+/* --- Hinweise ----------------------------------------------------------- */
+.hinweis {
+  border-radius: var(--radius-sm);
+  border: 1px solid;
+  border-left-width: 5px;
+  padding: .75rem 1rem;
+  margin-bottom: 1rem;
+}
+.hinweis ul { margin: .35rem 0 .5rem; padding-left: 1.2rem; }
+.hinweis--fehler { background: var(--c-bad-bg); border-color: var(--c-bad); color: #5c140e; }
+.hinweis--warnung { background: var(--c-warn-bg); border-color: var(--c-warn); color: #4d2e00; }
+.hinweis--info { background: var(--c-info-bg); border-color: var(--c-info); color: #12325c; }
+.hinweis--ok { background: var(--c-ok-bg); border-color: var(--c-ok); color: #0d3b21; }
+
+/* --- Karten-Varianten, Raster ------------------------------------------- */
+.card--flush { padding: 0; overflow: hidden; }
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
+  gap: 1rem;
+  align-items: start;
+}
+
+/* --- Werkzeugleiste und Eingaben ---------------------------------------- */
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  flex-wrap: wrap;
+  padding: .8rem 1rem;
+  border-bottom: 1px solid var(--c-border);
+  background: var(--c-surface-2);
+}
+.toolbar__label { font-weight: 600; }
+.eingabe {
+  font: inherit;
+  padding: .5rem .7rem;
+  border: 1px solid #9aa6bb;
+  border-radius: var(--radius-sm);
+  background: var(--c-surface);
+  color: var(--c-text);
+  min-width: 0;
+  flex: 1 1 18rem;
+  max-width: 32rem;
+}
+
+/* --- Tabelle ------------------------------------------------------------ */
+.table-wrap { overflow-x: auto; }
+.tabelle { width: 100%; border-collapse: collapse; font-size: .93rem; }
+.tabelle th, .tabelle td {
+  text-align: left;
+  padding: .6rem .8rem;
+  border-bottom: 1px solid var(--c-border);
+  vertical-align: top;
+}
+.tabelle thead th {
+  background: var(--c-surface);
+  color: var(--c-muted);
+  font-size: .8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .03em;
+  white-space: nowrap;
+}
+.tabelle tbody tr:last-child td { border-bottom: 0; }
+.zeile-link { cursor: pointer; }
+.zeile-link:hover td { background: var(--c-accent-soft); }
+.tabelle a { font-weight: 600; text-decoration: none; }
+.tabelle a:hover { text-decoration: underline; }
+.leer { text-align: center; color: var(--c-muted); padding: 2rem; }
+
+/* --- Ampel -------------------------------------------------------------- */
+.ampel {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  font-weight: 600;
+  font-size: .88rem;
+  white-space: nowrap;
+}
+.ampel__punkt {
+  width: .8rem; height: .8rem;
+  border-radius: 50%;
+  flex: none;
+  border: 2px solid transparent;
+}
+.ampel--gruen { color: var(--c-ok); }
+.ampel--gruen .ampel__punkt { background: var(--c-ok); }
+.ampel--gelb { color: var(--c-warn); }
+.ampel--gelb .ampel__punkt { background: #e0a100; border-color: var(--c-warn); }
+.ampel--rot { color: var(--c-bad); }
+.ampel--rot .ampel__punkt { background: var(--c-bad); }
+.ampel--grau { color: var(--c-muted); }
+.ampel--grau .ampel__punkt { background: #b5bdcc; }
+
+/* --- Definitionsliste (Falldaten) --------------------------------------- */
+.daten {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: .4rem 1rem;
+  margin: 0;
+}
+.daten dt { color: var(--c-muted); font-weight: 500; }
+.daten dd { margin: 0; overflow-wrap: anywhere; }
+
+/* --- Checkliste --------------------------------------------------------- */
+.checkliste { list-style: none; margin: 0; padding: 0; }
+.checkliste li {
+  display: grid;
+  grid-template-columns: 1.5rem 1fr;
+  gap: .1rem .5rem;
+  padding: .55rem 0;
+  border-bottom: 1px solid var(--c-border);
+}
+.checkliste li:last-child { border-bottom: 0; }
+.checkliste__symbol { font-weight: 700; grid-row: span 2; }
+.checkliste__typ { font-weight: 600; }
+.checkliste__status { color: var(--c-muted); font-size: .9rem; }
+.checkliste .is-ok .checkliste__symbol { color: var(--c-ok); }
+.checkliste .is-fehlt .checkliste__symbol { color: var(--c-bad); }
+.checkliste .is-fehlt .checkliste__status { color: var(--c-bad); font-weight: 600; }
+
+@media (max-width: 640px) {
+  .app-header__inner { gap: .75rem; }
+  .header-tools { margin-left: 0; width: 100%; justify-content: space-between; }
+  .daten { grid-template-columns: 1fr; gap: 0; }
+  .daten dd { margin-bottom: .5rem; }
+}
+
 /* --- Druck -------------------------------------------------------------- */
 @media print {
   .skip-link, .app-header, .kpi-bar, .app-footer, .toast, .no-print { display: none !important; }
