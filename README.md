@@ -6,7 +6,7 @@ Mini-App für die UVG-Fallführung: Sie ordnet eingehende medizinische Berichte 
 
 Entstanden am AXA-Hackathon (10./11. November 2026) als Beispiel-App für «AXA Mini Apps – Citizen Development Boost Factory» («AXA LOS!»).
 
-**Live:** _folgt nach dem ersten Deploy_
+**Live:** https://rexliz.github.io/axa-miniapp-caseconnect/
 
 ## Lokal starten
 
