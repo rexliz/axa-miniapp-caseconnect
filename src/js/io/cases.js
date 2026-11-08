@@ -3,7 +3,7 @@ import * as XLSX from '../../vendor/xlsx.mjs';
 import { zeilenZuFaellen } from '../core/cases.js';
 
 /** Bytes → Text: UTF-8 (mit oder ohne BOM), sonst Windows-1252 (ältere Excel-CSV-Exporte). */
-function bytesZuText(bytes) {
+export function bytesZuText(bytes) {
   try {
     return new TextDecoder('utf-8', { fatal: true }).decode(bytes).replace(/^﻿/, '');
   } catch {

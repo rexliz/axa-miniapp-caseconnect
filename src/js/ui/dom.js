@@ -66,6 +66,23 @@ export function ampel(v, { lang = false } = {}) {
   );
 }
 
+/** Anzeigestatus eines Dokuments (Maschinenergebnis + menschliche Entscheidung). */
+export function anzeigeStatus(d) {
+  if (d.status === 'duplikat') return { key: 'duplikat', text: 'Duplikat', ton: 'info' };
+  if (d.zuordnung?.art === 'automatisch') return { key: 'zugeordnet', text: 'Automatisch zugeordnet', ton: 'ok' };
+  if (d.zuordnung?.art === 'bestaetigt') return { key: 'zugeordnet', text: 'Bestätigt', ton: 'ok' };
+  if (d.zuordnung?.art === 'manuell') return { key: 'zugeordnet', text: 'Manuell zugeordnet', ton: 'ok' };
+  if (d.manuelleTriage) return { key: 'offen', text: 'Manuelle Triage', ton: 'bad' };
+  if (d.status === 'widerspruch') return { key: 'offen', text: 'Widerspruch – prüfen', ton: 'bad' };
+  if (d.status === 'vorschlag') return { key: 'offen', text: 'Vorschlag prüfen', ton: 'warn' };
+  return { key: 'offen', text: 'Manuelle Triage', ton: 'bad' };
+}
+
+export function statusBadge(d) {
+  const s = anzeigeStatus(d);
+  return h('span', { class: `badge badge--${s.ton}` }, s.text);
+}
+
 /** Fokus nach einem Ansichtswechsel auf die Hauptüberschrift setzen (Tastatur/Screenreader). */
 export function fokusAufUeberschrift(container) {
   const ueberschrift = container.querySelector('h1');

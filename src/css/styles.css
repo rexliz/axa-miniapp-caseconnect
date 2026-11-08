@@ -430,6 +430,153 @@ p { margin: 0 0 .75em; }
 .checkliste .is-fehlt .checkliste__symbol { color: var(--c-bad); }
 .checkliste .is-fehlt .checkliste__status { color: var(--c-bad); font-weight: 600; }
 
+/* --- Badges (Status) ---------------------------------------------------- */
+.klein { font-size: .85rem; }
+.badge {
+  display: inline-block;
+  padding: .15rem .55rem;
+  border-radius: 999px;
+  font-size: .82rem;
+  font-weight: 600;
+  white-space: nowrap;
+  border: 1px solid;
+}
+.badge--ok { background: var(--c-ok-bg); color: var(--c-ok); border-color: #9fd3b2; }
+.badge--warn { background: var(--c-warn-bg); color: var(--c-warn); border-color: #ebc77a; }
+.badge--bad { background: var(--c-bad-bg); color: var(--c-bad); border-color: #eeaaa4; }
+.badge--info { background: var(--c-info-bg); color: var(--c-info); border-color: #a9c4ea; }
+
+/* --- Filter-Knöpfe ------------------------------------------------------ */
+.filter { display: flex; flex-wrap: wrap; gap: .4rem; }
+.filter__knopf {
+  font: inherit;
+  font-size: .9rem;
+  font-weight: 600;
+  padding: .35rem .75rem;
+  border-radius: 999px;
+  border: 1px solid var(--c-border);
+  background: var(--c-surface);
+  color: var(--c-text);
+  cursor: pointer;
+}
+.filter__knopf:hover { border-color: var(--c-accent); }
+.filter__knopf[aria-pressed="true"] { background: var(--c-accent); border-color: var(--c-accent); color: var(--c-on-accent); }
+.filter__zahl { margin-left: .4rem; opacity: .8; font-weight: 500; }
+
+/* --- Bericht hinzufügen ------------------------------------------------- */
+.eingabe-karte { margin-top: 1rem; }
+.eingabe-raster {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+  gap: 1rem;
+}
+.eingabe-spalte { display: flex; flex-direction: column; gap: .5rem; }
+.feldlabel { font-weight: 600; display: block; margin-bottom: .25rem; }
+.eingabe--text {
+  max-width: none;
+  width: 100%;
+  font-family: var(--font-mono);
+  font-size: .85rem;
+  resize: vertical;
+  flex: 1 1 auto;
+}
+.dropzone {
+  flex: 1;
+  min-height: 9rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: .25rem;
+  text-align: center;
+  padding: 1rem;
+  border: 2px dashed #9aa6bb;
+  border-radius: var(--radius);
+  background: var(--c-surface-2);
+  cursor: pointer;
+}
+.dropzone:hover, .dropzone.is-aktiv { border-color: var(--c-accent); background: var(--c-accent-soft); }
+.dropzone__icon { font-size: 1.6rem; color: var(--c-accent); line-height: 1; }
+.leer-karte { text-align: center; padding: 2rem 1.25rem; }
+.leer-karte p { color: var(--c-muted); max-width: 36rem; margin: 0 auto 1rem; }
+
+/* --- Dokumentdetail ----------------------------------------------------- */
+.dok-raster {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+  gap: 1rem;
+  align-items: start;
+}
+.dok-seite { display: flex; flex-direction: column; gap: 1rem; }
+.originaltext {
+  margin: 0;
+  padding: 1rem;
+  background: #fbfcfe;
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-mono);
+  font-size: .82rem;
+  line-height: 1.55;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  max-height: 75vh;
+  overflow: auto;
+}
+.legende { list-style: none; display: flex; flex-wrap: wrap; gap: .35rem .9rem; padding: 0; margin: 0 0 .75rem; font-size: .85rem; }
+.legende li { display: inline-flex; align-items: center; gap: .35rem; }
+.legende__chip { display: inline-block; width: 1.1rem; height: .9rem; }
+
+/* Markierungen: helle Hintergründe + farbige Unterstreichung (Text bleibt dunkel, guter Kontrast) */
+.fs { color: inherit; border-radius: 3px; padding: 0 .12em; border-bottom: 2px solid; }
+.fs--schaden_nr { background: #dbe7ff; border-color: #1d4f91; }
+.fs--name { background: #efe0ff; border-color: #6b2fb3; }
+.fs--geburtsdatum { background: #d9f2e2; border-color: #17663a; }
+.fs--unfalldatum { background: #ffe5c7; border-color: #a14f00; }
+.fs--gln { background: #d3f0f0; border-color: #0e6a6a; }
+.fs--zsr { background: #e3ebef; border-color: #3d5a66; }
+.fs--dokumenttyp { background: #fff0b0; border-color: #8a6d00; }
+.fs--absender { background: #eceff4; border-color: #4f5b70; }
+
+.hinweisliste { margin: .75rem 0 0; padding-left: 1.2rem; color: var(--c-warn); font-size: .9rem; }
+.begruendung { background: var(--c-surface-2); border-radius: var(--radius-sm); padding: .6rem .8rem; font-size: .93rem; }
+
+/* --- Kandidaten --------------------------------------------------------- */
+.kandidaten { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: .75rem; }
+.kandidat {
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius-sm);
+  padding: .75rem .85rem;
+}
+.kandidat.is-zugeordnet { border-color: var(--c-ok); background: var(--c-ok-bg); }
+.kandidat__kopf { display: flex; justify-content: space-between; gap: .75rem; align-items: flex-start; }
+.kandidat__name { font-weight: 700; text-decoration: none; }
+.kandidat__name:hover { text-decoration: underline; }
+.kandidat__status { margin: .5rem 0 0; color: var(--c-ok); font-weight: 700; }
+.kandidat .btn { margin-top: .6rem; }
+
+.score { display: inline-flex; align-items: center; gap: .45rem; flex: none; }
+.score__balken { width: 5.5rem; height: .55rem; border-radius: 999px; background: #e3e8f0; overflow: hidden; }
+.score__fuellung { display: block; height: 100%; border-radius: 999px; }
+.score__fuellung.is-hoch { background: var(--c-ok); }
+.score__fuellung.is-mittel { background: #d18f00; }
+.score__fuellung.is-tief { background: var(--c-bad); }
+.score__zahl { font-weight: 700; font-variant-numeric: tabular-nums; min-width: 2ch; text-align: right; }
+
+.gruende { list-style: none; margin: .5rem 0 0; padding: 0; font-size: .88rem; }
+.grund { display: flex; gap: .5rem; padding: .1rem 0; }
+.grund__punkte { min-width: 2.6rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+.grund--plus .grund__punkte { color: var(--c-ok); }
+.grund--minus { color: var(--c-bad); }
+
+.reihe { display: flex; gap: .5rem; flex-wrap: wrap; align-items: center; }
+.reihe .eingabe { flex: 1 1 14rem; max-width: none; }
+.reihe--abstand { margin-top: 1rem; justify-content: space-between; }
+
+@media (max-width: 900px) {
+  .dok-raster { grid-template-columns: 1fr; }
+  .originaltext { max-height: none; }
+}
+
 @media (max-width: 640px) {
   .app-header__inner { gap: .75rem; }
   .header-tools { margin-left: 0; width: 100%; justify-content: space-between; }

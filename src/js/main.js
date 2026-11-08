@@ -5,6 +5,9 @@ import { faelleVonUrl } from './io/cases.js';
 import { fokusAufUeberschrift, h, toast } from './ui/dom.js';
 import { renderFallliste } from './ui/cases.js';
 import { renderFalldetail } from './ui/case-detail.js';
+import { renderPosteingang } from './ui/inbox.js';
+import { renderDokument } from './ui/document.js';
+import { anzeigeStatus } from './ui/dom.js';
 
 const main = /** @type {HTMLElement} */ (document.getElementById('main'));
 const nav = /** @type {HTMLElement} */ (document.getElementById('main-nav'));
@@ -45,6 +48,8 @@ const ctx = { standardLaden };
 const ROUTEN = [
   { muster: /^#\/faelle$/, nav: 'faelle', ansicht: (c) => renderFallliste(c, ctx) },
   { muster: /^#\/fall\/(.+)$/, nav: 'faelle', ansicht: (c, m) => renderFalldetail(c, decodeURIComponent(m[1])) },
+  { muster: /^#\/eingang$/, nav: 'eingang', ansicht: (c) => renderPosteingang(c) },
+  { muster: /^#\/dokument\/(.+)$/, nav: 'eingang', ansicht: (c, m) => renderDokument(c, decodeURIComponent(m[1])) },
 ];
 
 function aktuelleRoute() {
@@ -59,9 +64,14 @@ function aktuelleRoute() {
 // --- Kopfzeile -------------------------------------------------------------------------------
 function renderNav(aktivNav) {
   const d = aktiv();
-  const link = (id, href, text, anzahl) => h('a', { href, 'aria-current': aktivNav === id ? 'page' : null },
-    text, anzahl != null ? h('span', { class: 'count' }, String(anzahl)) : null);
-  nav.replaceChildren(link('faelle', '#/faelle', 'Fälle', d.faelle.length));
+  const link = (id, href, text, anzahl, zusatz = '') => h('a', { href, 'aria-current': aktivNav === id ? 'page' : null },
+    text, anzahl != null ? h('span', { class: 'count', title: `${anzahl}${zusatz}` }, String(anzahl),
+      zusatz ? h('span', { class: 'visually-hidden' }, zusatz) : null) : null);
+  const offen = d.dokumente.filter((x) => anzeigeStatus(x).key === 'offen').length;
+  nav.replaceChildren(
+    link('faelle', '#/faelle', 'Fälle', d.faelle.length),
+    link('eingang', '#/eingang', 'Posteingang', d.dokumente.length ? offen : null, ' offen'),
+  );
 }
 
 function renderWerkzeuge() {
@@ -98,7 +108,9 @@ function renderWerkzeuge() {
 async function wechsleDatensatz(key) {
   aendern((z) => { z.datensatz = key; });
   if (!aktiv().geladen) await standardLaden();
-  if (!window.location.hash.startsWith('#/faelle')) window.location.hash = '#/faelle';
+  // Detailansichten gehören zum alten Datensatz → zurück zur jeweiligen Liste
+  if (window.location.hash.startsWith('#/fall/')) window.location.hash = '#/faelle';
+  if (window.location.hash.startsWith('#/dokument/')) window.location.hash = '#/eingang';
   toast(`${DATENSAETZE[key].label} aktiv.`);
 }
 
