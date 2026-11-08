@@ -1,0 +1,55 @@
+{
+  "$kommentar": "Steckbrief als Vorschlag für den Governance-Rahmen von «AXA Mini Apps – Citizen Development Boost Factory» (AXA LOS!). Kein offizielles AXA-Schema.",
+  "steckbriefVersion": "0.1",
+  "id": "axa-miniapp-caseconnect",
+  "name": "CaseConnect Lite",
+  "version": "0.1.0",
+  "zweck": "Medizinische Unterlagen zu UVG-Unfällen (Arztzeugnis, Austritts-, Operations-, Radiologie- und Verlaufsbericht, Unfallmeldung) automatisch dem richtigen Schadenfall zuordnen, Duplikate abfangen, Empfang bestätigen und fehlende Unterlagen nachfordern.",
+  "zielgruppe": "Sachbearbeitung der UVG-Fallführung",
+  "owner": {
+    "team": "ZHAW-Team Wirtschaftsinformatik (3 Personen)",
+    "anlass": "AXA-Hackathon, 10./11. November 2026",
+    "repository": "https://github.com/rexliz/axa-miniapp-caseconnect"
+  },
+  "status": "Prototyp",
+  "datenquelle": {
+    "typ": "Excel-Liste",
+    "datei": "src/data/faelle.xlsx",
+    "austauschbar": "Ja, ohne Code-Änderung: Datei ersetzen oder in der App eigene .xlsx/.csv mit denselben Spalten hochladen.",
+    "spalten": [
+      "schaden_nr", "vorname", "nachname", "geburtsdatum", "unfalldatum", "falltyp", "arbeitgeber",
+      "leistungserbringer", "leistungserbringer_gln", "leistungserbringer_zsr", "sachbearbeitung"
+    ]
+  },
+  "datenklassifizierung": "Mockdaten, öffentlich",
+  "personendaten": false,
+  "gesundheitsdaten": false,
+  "speicherung": "Nur im Browser der nutzenden Person (localStorage). Kein Server, keine Datenbank.",
+  "netzwerkzugriffe": "keine (lädt nur Dateien der eigenen Seite; durch Content-Security-Policy default-src 'self' erzwungen)",
+  "externeAbhaengigkeiten": [
+    {
+      "name": "SheetJS Community Edition",
+      "version": "0.20.3",
+      "zweck": "Excel-Dateien lesen",
+      "lizenz": "Apache-2.0",
+      "quelle": "cdn.sheetjs.com",
+      "einbindung": "lokal unter src/vendor/xlsx.mjs (kein CDN zur Laufzeit)"
+    }
+  ],
+  "ki": "keine. Die Extraktion ist regelbasiert (Regex und Schlüsselwörter) und über eine klare Schnittstelle austauschbar.",
+  "hosting": {
+    "plattform": "GitHub Pages",
+    "url": "https://rexliz.github.io/axa-miniapp-caseconnect/",
+    "deployment": "GitHub Actions (.github/workflows/pages.yml), nur nach grünen Tests"
+  },
+  "sicherheit": {
+    "contentSecurityPolicy": "default-src 'self'; img-src 'self' data:; object-src 'none'; base-uri 'self'; form-action 'self'",
+    "login": false,
+    "secrets": "keine"
+  },
+  "qualitaet": {
+    "tests": "npm test (node --test, ohne Test-Framework)",
+    "testumfang": "Extraktion, Matching (10 Szenarien), Vollständigkeit, Duplikate, Excel-Import, Fiktivitäts-Regeln der Mockdaten, Security-Leitplanken der Seite"
+  },
+  "grenzen": "Prototyp ohne echte Anbindung an Kernsysteme, ohne Login und ohne Mailversand. Nicht für echte Daten freigegeben."
+}
