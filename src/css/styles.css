@@ -1,0 +1,256 @@
+/* CaseConnect Lite – sachlich, modern, dunkelblauer Akzent.
+   Keine Inline-Styles (CSP), alle Farben als Tokens. */
+
+:root {
+  --c-bg: #f4f6fa;
+  --c-surface: #ffffff;
+  --c-surface-2: #eef2f8;
+  --c-text: #172033;
+  --c-muted: #4f5b70;
+  --c-border: #d5dce8;
+  --c-accent: #0b2a5b;
+  --c-accent-hover: #143d7d;
+  --c-accent-soft: #e3eaf6;
+  --c-on-accent: #ffffff;
+  --c-focus: #1f6feb;
+
+  --c-ok: #17663a;
+  --c-ok-bg: #e2f3e8;
+  --c-warn: #8a5300;
+  --c-warn-bg: #fdf1d8;
+  --c-bad: #a3231a;
+  --c-bad-bg: #fbe5e3;
+  --c-info: #1d4f91;
+  --c-info-bg: #e3edfb;
+
+  --c-banner-bg: #fff3c4;
+  --c-banner-text: #4a3500;
+  --c-banner-border: #e0b400;
+
+  --radius: 10px;
+  --radius-sm: 6px;
+  --shadow: 0 1px 2px rgb(16 24 40 / 6%), 0 1px 3px rgb(16 24 40 / 8%);
+  --font: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --maxw: 1240px;
+}
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  font-family: var(--font);
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--c-text);
+  background: var(--c-bg);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+a { color: var(--c-accent); }
+a:hover { color: var(--c-accent-hover); }
+
+:focus-visible {
+  outline: 3px solid var(--c-focus);
+  outline-offset: 2px;
+}
+
+h1, h2, h3 { line-height: 1.25; margin: 0 0 .5em; }
+h1 { font-size: 1.6rem; }
+h2 { font-size: 1.25rem; }
+h3 { font-size: 1.05rem; }
+p { margin: 0 0 .75em; }
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* --- Skip-Link ---------------------------------------------------------- */
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: -100px;
+  background: var(--c-accent);
+  color: var(--c-on-accent);
+  padding: .5rem 1rem;
+  border-radius: var(--radius-sm);
+  z-index: 100;
+}
+.skip-link:focus { top: .5rem; color: var(--c-on-accent); }
+
+/* --- Banner ------------------------------------------------------------- */
+.banner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .6rem;
+  padding: .55rem 1rem;
+  background: var(--c-banner-bg);
+  color: var(--c-banner-text);
+  border-bottom: 2px solid var(--c-banner-border);
+  font-size: .95rem;
+  text-align: center;
+}
+.banner__icon {
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+  width: 1.4rem; height: 1.4rem;
+  border-radius: 50%;
+  background: var(--c-banner-text);
+  color: var(--c-banner-bg);
+  font-weight: 700;
+  font-size: .85rem;
+}
+
+/* --- Header ------------------------------------------------------------- */
+.app-header {
+  background: var(--c-accent);
+  color: var(--c-on-accent);
+}
+.app-header__inner {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: .6rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  color: var(--c-on-accent);
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 1.15rem;
+}
+.brand:hover { color: var(--c-on-accent); }
+.brand__mark {
+  display: inline-grid;
+  place-items: center;
+  width: 2rem; height: 2rem;
+  border-radius: 8px;
+  background: var(--c-on-accent);
+  color: var(--c-accent);
+  font-size: .85rem;
+}
+.brand__lite { font-weight: 400; opacity: .85; }
+
+.main-nav { display: flex; gap: .25rem; flex-wrap: wrap; }
+.main-nav a {
+  color: var(--c-on-accent);
+  text-decoration: none;
+  padding: .45rem .8rem;
+  border-radius: var(--radius-sm);
+  font-weight: 500;
+}
+.main-nav a:hover { background: rgb(255 255 255 / 12%); }
+.main-nav a[aria-current="page"] { background: rgb(255 255 255 / 20%); }
+.main-nav .count {
+  display: inline-block;
+  min-width: 1.4em;
+  margin-left: .35rem;
+  padding: 0 .4em;
+  border-radius: 999px;
+  background: var(--c-on-accent);
+  color: var(--c-accent);
+  font-size: .8rem;
+  text-align: center;
+}
+
+.header-tools { margin-left: auto; display: flex; align-items: center; gap: .75rem; flex-wrap: wrap; }
+
+/* --- Layout ------------------------------------------------------------- */
+.app-main {
+  flex: 1;
+  width: 100%;
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 1.25rem 1rem 2.5rem;
+}
+.app-main:focus { outline: none; }
+
+.app-footer {
+  border-top: 1px solid var(--c-border);
+  color: var(--c-muted);
+  font-size: .85rem;
+  text-align: center;
+  padding: 1rem;
+}
+.app-footer p { margin: 0; }
+
+.card {
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 1.1rem 1.25rem;
+}
+
+.muted { color: var(--c-muted); }
+
+/* --- Buttons ------------------------------------------------------------ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  font: inherit;
+  font-weight: 600;
+  font-size: .95rem;
+  padding: .5rem .95rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--c-accent);
+  background: var(--c-accent);
+  color: var(--c-on-accent);
+  cursor: pointer;
+  text-decoration: none;
+}
+.btn:hover { background: var(--c-accent-hover); border-color: var(--c-accent-hover); color: var(--c-on-accent); }
+.btn--secondary { background: var(--c-surface); color: var(--c-accent); }
+.btn--secondary:hover { background: var(--c-accent-soft); color: var(--c-accent); }
+.btn:disabled { opacity: .5; cursor: not-allowed; }
+
+/* --- Toast -------------------------------------------------------------- */
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 1.25rem;
+  transform: translateX(-50%);
+  background: var(--c-text);
+  color: #fff;
+  padding: .6rem 1rem;
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow);
+  font-size: .95rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .2s;
+  z-index: 50;
+}
+.toast.is-visible { opacity: 1; }
+
+/* --- KPI-Leiste (Platzhalter, Inhalt folgt) ----------------------------- */
+.kpi-bar:empty { display: none; }
+
+/* --- Druck -------------------------------------------------------------- */
+@media print {
+  .skip-link, .app-header, .kpi-bar, .app-footer, .toast, .no-print { display: none !important; }
+  body { background: #fff; }
+  .banner { border: 1px solid #000; background: #fff; color: #000; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; }
+}

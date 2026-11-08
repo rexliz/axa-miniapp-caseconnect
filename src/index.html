@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="de-CH">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; object-src 'none'; base-uri 'self'; form-action 'self'">
+  <meta name="referrer" content="no-referrer">
+  <meta name="robots" content="noindex">
+  <meta name="description" content="CaseConnect Lite – Hackathon-Prototyp mit fiktiven Daten: medizinische UVG-Berichte Schadenfällen zuordnen.">
+  <title>CaseConnect Lite</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/styles.css">
+  <script type="module" src="js/main.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Zum Inhalt springen</a>
+
+  <div class="banner" role="note">
+    <span class="banner__icon" aria-hidden="true">!</span>
+    <strong>Hackathon-Prototyp mit fiktiven Daten – keine offizielle AXA-Anwendung</strong>
+  </div>
+
+  <header class="app-header">
+    <div class="app-header__inner">
+      <a class="brand" href="#/faelle" aria-label="CaseConnect Lite, zur Fallliste">
+        <span class="brand__mark" aria-hidden="true">CC</span>
+        <span class="brand__name">CaseConnect <span class="brand__lite">Lite</span></span>
+      </a>
+      <nav class="main-nav" aria-label="Hauptnavigation" id="main-nav"></nav>
+      <div class="header-tools" id="header-tools"></div>
+    </div>
+  </header>
+
+  <section class="kpi-bar" id="kpi-bar" aria-label="Kennzahlen"></section>
+
+  <main id="main" class="app-main" tabindex="-1">
+    <noscript>Diese App braucht JavaScript. Bitte JavaScript aktivieren.</noscript>
+  </main>
+
+  <footer class="app-footer">
+    <p>CaseConnect Lite · ZHAW-Team · AXA-Hackathon 2026 · Alle Personen, Fälle, Spitäler und Firmen sind frei erfunden.</p>
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>

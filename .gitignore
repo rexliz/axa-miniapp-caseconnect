@@ -1,0 +1,15 @@
+# Abhängigkeiten (das Projekt hat bewusst keine, aber sicher ist sicher)
+node_modules/
+
+# Betriebssystem und Editor
+.DS_Store
+Thumbs.db
+.vscode/*
+!.vscode/extensions.json
+.idea/
+
+# Logs und temporäre Dateien
+*.log
+*.tmp
+.env
+.env.*

@@ -1,0 +1,15 @@
+{
+  "name": "axa-miniapp-caseconnect",
+  "version": "0.1.0",
+  "private": true,
+  "description": "CaseConnect Lite – Zuordnung medizinischer UVG-Berichte zu Schadenfällen. Hackathon-Prototyp mit fiktiven Daten.",
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "start": "node scripts/serve.mjs",
+    "test": "node --test \"tests/*.test.js\"",
+    "generate-data": "node scripts/generate-mockdata.mjs"
+  }
+}
