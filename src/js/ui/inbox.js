@@ -171,7 +171,7 @@ export function renderPosteingang(container) {
   } else {
     const tabs = h('div', { class: 'filter', role: 'group', 'aria-label': 'Dokumente filtern' },
       [['alle', 'Alle'], ['offen', 'Offen'], ['zugeordnet', 'Zugeordnet'], ['duplikat', 'Duplikate']].map(([k, t]) => h('button', {
-        type: 'button', class: 'filter__knopf', 'aria-pressed': String(filter === k),
+        type: 'button', class: 'filter__knopf', 'aria-pressed': String(filter === k), id: `filter-${k}`,
         onclick: () => { filter = k; aendern(() => {}); },
       }, t, h('span', { class: 'filter__zahl' }, String(zaehle(k))))));
     const sichtbar = d.dokumente.filter((x) => filter === 'alle' || anzeigeStatus(x).key === filter);

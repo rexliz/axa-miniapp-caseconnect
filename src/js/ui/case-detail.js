@@ -29,7 +29,7 @@ function nachforderungsBereich(fall, v) {
   if (v.vollstaendig) return h('p', { class: 'hinweis hinweis--ok' }, 'Alle nötigen Unterlagen sind eingegangen. Keine Nachforderung nötig.');
   const offen = nachforderungOffen === fall.schaden_nr;
   const knopf = h('button', {
-    type: 'button', class: offen ? 'btn btn--secondary' : 'btn', 'aria-expanded': String(offen), 'aria-controls': 'nachforderung',
+    type: 'button', class: offen ? 'btn btn--secondary' : 'btn', 'aria-expanded': String(offen), 'aria-controls': offen ? 'nachforderung' : null, id: 'nachforderung-knopf',
     onclick: () => { nachforderungOffen = offen ? null : fall.schaden_nr; aendern(() => {}); },
   }, offen ? 'Nachforderung ausblenden' : 'Nachforderung erstellen');
   const briefe = offen ? nachforderungen(fall, v) : [];

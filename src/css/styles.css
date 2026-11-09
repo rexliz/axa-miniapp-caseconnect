@@ -363,7 +363,7 @@ h1[tabindex="-1"]:focus { outline: none; } /* nur per Skript fokussiert (Ansicht
 .eingabe {
   font: inherit;
   padding: .5rem .7rem;
-  border: 1px solid #9aa6bb;
+  border: 1px solid #76829a;
   border-radius: var(--radius-sm);
   background: var(--c-surface);
   color: var(--c-text);
@@ -415,7 +415,7 @@ h1[tabindex="-1"]:focus { outline: none; } /* nur per Skript fokussiert (Ansicht
 .ampel--gruen { color: var(--c-ok); }
 .ampel--gruen .ampel__punkt { background: var(--c-ok); }
 .ampel--gelb { color: var(--c-warn); }
-.ampel--gelb .ampel__punkt { background: #e0a100; border-color: var(--c-warn); }
+.ampel--gelb .ampel__punkt { background: #b07a00; border-color: var(--c-warn); }
 .ampel--rot { color: var(--c-bad); }
 .ampel--rot .ampel__punkt { background: var(--c-bad); }
 .ampel--grau { color: var(--c-muted); }
@@ -508,7 +508,7 @@ h1[tabindex="-1"]:focus { outline: none; } /* nur per Skript fokussiert (Ansicht
   gap: .25rem;
   text-align: center;
   padding: 1rem;
-  border: 2px dashed #9aa6bb;
+  border: 2px dashed #76829a;
   border-radius: var(--radius);
   background: var(--c-surface-2);
   cursor: pointer;
@@ -576,7 +576,7 @@ h1[tabindex="-1"]:focus { outline: none; } /* nur per Skript fokussiert (Ansicht
 .score__balken { width: 5.5rem; height: .55rem; border-radius: 999px; background: #e3e8f0; overflow: hidden; }
 .score__fuellung { display: block; height: 100%; border-radius: 999px; }
 .score__fuellung.is-hoch { background: var(--c-ok); }
-.score__fuellung.is-mittel { background: #d18f00; }
+.score__fuellung.is-mittel { background: #a86f00; }
 .score__fuellung.is-tief { background: var(--c-bad); }
 .score__zahl { font-weight: 700; font-variant-numeric: tabular-nums; min-width: 2ch; text-align: right; }
 

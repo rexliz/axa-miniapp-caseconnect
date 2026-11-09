@@ -162,13 +162,24 @@ function render() {
     main.replaceChildren(...hinweise, h('p', { class: 'muted', role: 'status' }, 'Fallliste wird geladen …'));
     return;
   }
+  // Fokus merken, damit Tastatur-Nutzende nach einer Aktion nicht auf <body> landen
+  const fokus = document.activeElement;
+  const fokusImInhalt = fokus instanceof HTMLElement && main.contains(fokus);
+  const fokusId = fokusImInhalt ? fokus.id : '';
+
   const inhalt = h('div', { class: 'view' });
   route.ansicht(inhalt, route.m);
   main.replaceChildren(...hinweise, inhalt);
 
-  // Fokus nur bei echtem Ansichtswechsel verschieben
   const hash = window.location.hash || '#/faelle';
-  if (letzterHash !== null && hash !== letzterHash) fokusAufUeberschrift(inhalt);
+  if (letzterHash !== null && hash !== letzterHash) {
+    fokusAufUeberschrift(inhalt); // echter Ansichtswechsel
+  } else if (fokusImInhalt) {
+    // gleiche Ansicht neu gezeichnet: gleiches Element wieder fokussieren, sonst die Überschrift
+    const ziel = fokusId ? document.getElementById(fokusId) : null;
+    if (ziel) ziel.focus({ preventScroll: true });
+    else fokusAufUeberschrift(inhalt);
+  }
   letzterHash = hash;
 }
 

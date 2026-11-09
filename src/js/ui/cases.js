@@ -140,10 +140,18 @@ export function renderFallliste(container, ctx) {
     if (tr && !e.target.closest('a, button')) window.location.hash = tr.dataset.href;
   });
 
+  const einstieg = !d.dokumente.length && !meldungsBox
+    ? h('div', { class: 'hinweis hinweis--info' },
+      h('strong', {}, 'So geht’s: '),
+      'Die Fälle stammen aus der Excel-Liste ', h('span', { class: 'mono' }, quelle?.name ?? 'faelle.xlsx'), '. ',
+      'Im ', h('a', { href: '#/eingang' }, 'Posteingang'), ' den Demo-Posteingang laden: Die App liest jeden Arztbericht, ordnet ihn dem richtigen Fall zu und zeigt hier, welche Unterlagen noch fehlen.')
+    : null;
+
   aktualisieren();
   container.replaceChildren(
     kopf,
     meldungsBox ?? '',
+    einstieg ?? '',
     h('section', { class: 'card card--flush' },
       h('div', { class: 'toolbar' },
         h('label', { for: 'fall-suche', class: 'toolbar__label' }, 'Suchen'),
