@@ -149,6 +149,7 @@ axa-miniapp-caseconnect/
 ## Weitere Dokumentation
 
 - [`docs/mockdaten.md`](docs/mockdaten.md): wie die Daten entstehen, Fiktivitäts-Regeln, die 10 Szenarien
+- [`docs/bedienung.md`](docs/bedienung.md): Bedienungsanleitung für alle Ansichten, mit Beispielbericht zum Ausprobieren
 - [`docs/demo-skript.md`](docs/demo-skript.md): Ablauf der 3-Minuten-Live-Demo
 - [`docs/entscheidungen.md`](docs/entscheidungen.md): kleinere Entscheidungen während der Umsetzung
 

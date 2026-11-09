@@ -27,7 +27,7 @@ Hackathon-Prototyp (ZHAW-Team, AXA-Hackathon 10./11.11.2026), Teil von «AXA Min
 - `src/js/ui/`: eine Datei pro Ansicht. `main.js` enthält das Hash-Routing (`#/faelle`, `#/fall/…`, `#/eingang`, `#/dokument/…`, `#/quittung/…`), `state.js` den Zustand pro Datensatz.
 - Dokument-Status: `status` = Ergebnis der Maschine, `zuordnung.art` = automatisch/bestätigt/manuell, `manuelleTriage` = Entscheid eines Menschen
 - `scripts/generate-mockdata.mjs`: deterministischer Generator (Seed 20261110). Er nutzt die Core-Module mit.
-- `docs/`: `mockdaten.md`, `demo-skript.md`, `entscheidungen.md` (neue Entscheidungen unten anhängen)
+- `docs/`: `bedienung.md` (Bedienungsanleitung, bei UI-Änderungen nachführen), `mockdaten.md`, `demo-skript.md`, `entscheidungen.md` (neue Entscheidungen unten anhängen)
 
 ## Befehle
 - `npm start`: lokaler Server auf http://localhost:8080/ (`PORT=… npm start` für einen anderen Port)
