@@ -26,14 +26,14 @@ Bei einem UVG-Unfall braucht die Unfallversicherung medizinische Unterlagen von 
 | **Fallliste aus Excel** | Lädt `faelle.xlsx` (oder eine eigene .xlsx/.csv) und zeigt die Fälle mit Suche und Vollständigkeits-Ampel. |
 | **Posteingang** | Demo-Berichte laden, Text einfügen oder `.txt` per Drag & Drop ablegen |
 | **Extraktion** | Liest Dokumenttyp, Schaden-Nr., Name, Geburtsdatum, Unfalldatum, GLN und ZSR aus und markiert die Fundstellen farbig im Originaltext. |
-| **Zuordnung mit Konfidenz** | Zeigt die drei besten Fälle mit Score 0–100 und Begründung. Bestätigen, anderen Fall wählen oder an die manuelle Triage geben. |
+| **Zuordnung mit Konfidenz** | Zeigt die drei besten Fälle mit Score 0–100 und Begründung. Bestätigen, anderen Fall wählen oder an die manuelle Triage geben. «Nächstes offenes Dokument» führt durch alle offenen Fälle, ohne Umweg über den Posteingang. |
 | **Widerspruch** | Passt die Schaden-Nr. nicht zum Namen, ordnet die App **nicht** zu, denn ein falsch zugeordneter Arztbericht wäre ein Datenschutzvorfall. |
 | **Duplikate** | Bei gleichem Inhalt (SHA-256 über den normalisierten Text) zeigt sie «Bereits eingegangen am …, Eingangs-ID …». |
 | **Empfangsbestätigung** | Eingangs-ID `EB-JJJJMMTT-0001`, druckbar und als Text kopierbar |
 | **Vollständigkeit und Nachforderung** | Checkliste je Falltyp. Der Anfragetext an Spital bzw. Arbeitgeber enthält nur, was wirklich fehlt. |
 | **Kennzahlen** | Dokumente total, Anteil automatisch zugeordnet, offen in Triage, abgefangene Duplikate, unvollständige Fälle |
 | **Datensätze** | Demo (12 Fälle, 10 Szenarien) und Volumen (150 Fälle, 300 Berichte, rund 89 % automatisch) |
-| **Persistenz** | Der Zustand liegt im Browser (localStorage). Dazu kommen «Demo zurücksetzen» und ein CSV-Export der Zuordnungen. |
+| **Persistenz** | Der Zustand liegt im Browser (localStorage). Dazu kommen «Demo zurücksetzen» (oben rechts) und ein CSV-Export der Zuordnungen (im Posteingang). |
 
 ![Dokumentdetail: Operationsbericht mit Tippfehler «Bruner», automatisch zugeordnet](docs/screenshot-dokument.png)
 
@@ -112,7 +112,7 @@ axa-miniapp-caseconnect/
 │   ├── index.html                # CSP, Banner, App-Hülle
 │   ├── css/styles.css            # Design-Tokens, Layout, Print-CSS
 │   ├── js/
-│   │   ├── main.js               # Einstieg, Routing, Kopfzeile, Export
+│   │   ├── main.js               # Einstieg, Routing, Kopfzeile
 │   │   ├── state.js              # Zustand + localStorage (try/catch)
 │   │   ├── config.js             # Regeln, Schwellwerte, Schlüsselwörter
 │   │   ├── core/                 # reine Logik ohne DOM, vollständig getestet

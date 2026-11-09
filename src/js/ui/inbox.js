@@ -1,8 +1,9 @@
 // Ansicht «Posteingang»: Demo-Posteingang laden, Text einfügen, .txt per Drag & Drop, Liste mit Ergebnis.
 import { aendern, aktiv, zustandLesen } from '../state.js';
 import { DATENSAETZE, DOKUMENTTYPEN } from '../config.js';
-import { formatChZeit } from '../core/dates.js';
+import { formatChZeit, tagesSchluessel } from '../core/dates.js';
 import { verarbeiteAlle } from '../core/pipeline.js';
+import { zuordnungenAlsCsv } from '../core/export.js';
 import { posteingangLaden, textDateienLesen } from '../io/inbox.js';
 import { anzeigeStatus, h, statusBadge, toast } from './dom.js';
 
@@ -63,6 +64,20 @@ async function mitgeliefertenPosteingangLaden() {
     meldung = { art: 'fehler', text: `Der Posteingang konnte nicht geladen werden: ${e?.message ?? e}` };
     aendern(() => {});
   }
+}
+
+/** Zuordnungen des aktiven Datensatzes als CSV herunterladen. */
+function exportieren() {
+  const d = aktiv();
+  const blob = new Blob([zuordnungenAlsCsv(d.dokumente)], { type: 'text/csv;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const heute = tagesSchluessel(new Date().toISOString()); // lokales Datum JJJJMMTT
+  const a = h('a', { href: url, download: `caseconnect-zuordnungen-${zustandLesen().datensatz}-${heute}.csv`, class: 'visually-hidden' });
+  document.body.append(a);
+  a.click();
+  a.remove();
+  window.setTimeout(() => URL.revokeObjectURL(url), 1000);
+  toast(`${d.dokumente.length} Zuordnungen als CSV exportiert.`);
 }
 
 async function dateienAnnehmen(dateien) {
@@ -129,14 +144,16 @@ function zeile(d, faelleNachNr, dokNachId) {
   const original = d.duplikat_von ? dokNachId.get(d.duplikat_von) : null;
   const link = `#/dokument/${d.id}`;
   return h('tr', { class: 'zeile-link', dataset: { href: link } },
-    h('td', { class: 'nowrap' }, formatChZeit(d.eingegangen_am)),
-    h('td', { class: 'nowrap' }, h('a', { href: link, class: d.eingangs_id ? 'mono' : 'muted' }, d.eingangs_id ?? 'keine (Duplikat)')),
-    h('td', {}, h('div', {}, d.absender || '–'), h('div', { class: 'muted klein' }, d.dateiname)),
+    h('td', { class: 'nowrap' },
+      h('a', { href: link, class: d.eingangs_id ? 'mono' : 'muted' }, d.eingangs_id ?? 'keine (Duplikat)'),
+      h('div', { class: 'muted klein' }, formatChZeit(d.eingegangen_am))),
+    h('td', {}, h('div', {}, d.absender || '–'), h('div', { class: 'muted klein datei', title: d.dateiname }, d.dateiname)),
     h('td', {}, DOKUMENTTYPEN[d.extraktion?.dokumenttyp]?.label ?? 'unbekannt'),
     h('td', {}, statusBadge(d)),
     h('td', { class: 'nowrap' },
-      fall ? h('a', { href: `#/fall/${encodeURIComponent(fall.schaden_nr)}`, class: 'mono' }, fall.schaden_nr)
-        : d.status === 'duplikat' ? h('span', { class: 'muted' }, `Duplikat von ${original?.eingangs_id ?? 'früherem Eingang'}`)
+      fall ? [h('a', { href: `#/fall/${encodeURIComponent(fall.schaden_nr)}`, class: 'mono' }, fall.schaden_nr),
+        h('div', { class: 'muted klein' }, `${fall.vorname} ${fall.nachname}`)]
+        : d.status === 'duplikat' ? h('span', { class: 'muted' }, 'Duplikat von', h('br'), h('span', { class: 'mono' }, original?.eingangs_id ?? 'früherem Eingang'))
           : top ? h('span', { class: 'muted' }, `${top.schaden_nr} (${top.score})`) : h('span', { class: 'muted' }, '–')),
   );
 }
@@ -155,7 +172,8 @@ export function renderPosteingang(container) {
       h('h1', {}, 'Posteingang'),
       h('p', { class: 'muted' }, `${d.dokumente.length} Dokumente · ${zaehle('offen')} offen · ${DATENSAETZE[key].label}`)),
     h('div', { class: 'actions' },
-      h('button', { type: 'button', class: 'btn', onclick: mitgeliefertenPosteingangLaden }, knopfText)));
+      h('button', { type: 'button', class: 'btn', onclick: mitgeliefertenPosteingangLaden }, knopfText),
+      d.dokumente.length ? h('button', { type: 'button', class: 'btn btn--secondary', id: 'export-knopf', onclick: exportieren }, 'Export CSV') : null));
 
   const hinweis = meldung
     ? h('div', { class: `hinweis hinweis--${meldung.art}`, role: meldung.art === 'fehler' ? 'alert' : 'status' }, meldung.text, ' ',
@@ -177,8 +195,8 @@ export function renderPosteingang(container) {
     const sichtbar = d.dokumente.filter((x) => filter === 'alle' || anzeigeStatus(x).key === filter);
     const tabelle = h('table', { class: 'tabelle' },
       h('caption', { class: 'visually-hidden' }, 'Eingegangene Dokumente mit Zuordnungsergebnis'),
-      h('thead', {}, h('tr', {}, ['Eingang', 'Eingangs-ID', 'Absender / Datei', 'Dokumenttyp', 'Ergebnis', 'Fall'].map((t) => h('th', { scope: 'col' }, t)))),
-      h('tbody', {}, sichtbar.length ? sichtbar.map((x) => zeile(x, faelleNachNr, dokNachId)) : h('tr', {}, h('td', { colspan: 6, class: 'leer' }, 'Keine Dokumente in diesem Filter.'))));
+      h('thead', {}, h('tr', {}, ['Eingang', 'Absender / Datei', 'Dokumenttyp', 'Ergebnis', 'Fall'].map((t) => h('th', { scope: 'col' }, t)))),
+      h('tbody', {}, sichtbar.length ? sichtbar.map((x) => zeile(x, faelleNachNr, dokNachId)) : h('tr', {}, h('td', { colspan: 5, class: 'leer' }, 'Keine Dokumente in diesem Filter.'))));
     tabelle.addEventListener('click', (e) => {
       const tr = e.target.closest('tr[data-href]');
       if (tr && !e.target.closest('a, button')) window.location.hash = tr.dataset.href;

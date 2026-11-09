@@ -24,27 +24,32 @@ function checkliste(fall, v) {
         : 'fehlt'))));
 }
 
-function nachforderungsBereich(fall, v) {
-  if (!v.bekannt) return null;
-  if (v.vollstaendig) return h('p', { class: 'hinweis hinweis--ok' }, 'Alle nötigen Unterlagen sind eingegangen. Keine Nachforderung nötig.');
+/** Knopf oben rechts im Fall (nur wenn etwas fehlt). Die Texte erscheinen direkt darunter, gut sichtbar. */
+function nachforderungKnopf(fall, v) {
+  if (!v.bekannt || v.vollstaendig) return null;
   const offen = nachforderungOffen === fall.schaden_nr;
-  const knopf = h('button', {
+  return h('button', {
     type: 'button', class: offen ? 'btn btn--secondary' : 'btn', 'aria-expanded': String(offen), 'aria-controls': offen ? 'nachforderung' : null, id: 'nachforderung-knopf',
     onclick: () => { nachforderungOffen = offen ? null : fall.schaden_nr; aendern(() => {}); },
   }, offen ? 'Nachforderung ausblenden' : 'Nachforderung erstellen');
-  const briefe = offen ? nachforderungen(fall, v) : [];
-  return h('div', { class: 'nachforderung' },
-    knopf,
-    offen ? h('div', { id: 'nachforderung', class: 'briefe' }, briefe.map((b) => h('article', { class: 'brief' },
+}
+
+function nachforderungsBereich(fall, v) {
+  if (!v.bekannt || v.vollstaendig || nachforderungOffen !== fall.schaden_nr) return null;
+  const briefe = nachforderungen(fall, v);
+  return h('section', { class: 'card nachforderung', id: 'nachforderung', 'aria-labelledby': 'h-nachforderung' },
+    h('h2', { id: 'h-nachforderung' }, 'Nachforderung'),
+    h('p', { class: 'muted klein' }, 'Entwürfe zum Kopieren. Sie nennen nur, was fehlt, und werden nicht automatisch verschickt.'),
+    h('div', { class: 'briefe' }, briefe.map((b) => h('article', { class: 'brief' },
       h('div', { class: 'brief__kopf' },
         h('div', {},
           h('div', {}, h('strong', {}, 'An: '), b.empfaenger, b.rolle === 'arbeitgeber' ? h('span', { class: 'muted' }, ' (Arbeitgeber)') : h('span', { class: 'muted' }, ' (Leistungserbringer)')),
-          h('div', {}, h('strong', {}, 'Betreff: '), b.betreff)),
-        h('button', {
-          type: 'button', class: 'btn btn--secondary',
-          onclick: async () => toast((await kopieren(briefAlsText(b))) ? 'Anfragetext kopiert.' : 'Kopieren nicht möglich – bitte Text manuell markieren.'),
-        }, 'Text kopieren')),
-      h('pre', { class: 'brief__text', tabindex: '0' }, b.text)))) : null);
+          h('div', {}, h('strong', {}, 'Betreff: '), b.betreff))),
+      h('pre', { class: 'brief__text', tabindex: '0' }, b.text),
+      h('button', {
+        type: 'button', class: 'btn btn--secondary abstand-oben',
+        onclick: async () => toast((await kopieren(briefAlsText(b))) ? 'Anfragetext kopiert.' : 'Kopieren nicht möglich – bitte Text manuell markieren.'),
+      }, 'Text kopieren')))));
 }
 
 function dokumentListe(fall, dokumente) {
@@ -79,7 +84,8 @@ export function renderFalldetail(container, schadenNr) {
       h('div', {},
         h('h1', {}, `${fall.vorname} ${fall.nachname}`),
         h('p', { class: 'muted' }, h('span', { class: 'mono' }, fall.schaden_nr), ` · ${fall.falltyp}`)),
-      h('div', { class: 'actions' }, ampel(v, { lang: true }))),
+      h('div', { class: 'actions' }, ampel(v, { lang: true }), nachforderungKnopf(fall, v))),
+    nachforderungsBereich(fall, v),
     h('div', { class: 'grid-2' },
       h('section', { class: 'card', 'aria-labelledby': 'h-falldaten' },
         h('h2', { id: 'h-falldaten' }, 'Falldaten'),
@@ -98,7 +104,7 @@ export function renderFalldetail(container, schadenNr) {
       h('section', { class: 'card', 'aria-labelledby': 'h-unterlagen' },
         h('h2', { id: 'h-unterlagen' }, 'Nötige Unterlagen'),
         checkliste(fall, v),
-        nachforderungsBereich(fall, v))),
+        v.bekannt && v.vollstaendig ? h('p', { class: 'hinweis hinweis--ok abstand-oben' }, 'Alle nötigen Unterlagen sind eingegangen. Keine Nachforderung nötig.') : null)),
     h('section', { class: 'card abstand-oben', 'aria-labelledby': 'h-dokumente' },
       h('h2', { id: 'h-dokumente' }, 'Zugeordnete Dokumente'),
       dokumentListe(fall, d.dokumente)),

@@ -30,8 +30,8 @@ function zeile(fall, dokumente) {
     h('td', { class: 'nowrap' }, formatCh(fall.unfalldatum)),
     h('td', {}, fall.falltyp),
     h('td', {}, fall.leistungserbringer),
-    h('td', {}, fall.arbeitgeber),
-    h('td', { class: 'nowrap' }, fall.sachbearbeitung),
+    h('td', { class: 'spalte-optional' }, fall.arbeitgeber),
+    h('td', { class: 'nowrap spalte-optional' }, fall.sachbearbeitung),
   );
 }
 
@@ -119,7 +119,7 @@ export function renderFallliste(container, ctx) {
     h('caption', { class: 'visually-hidden' }, 'Fallliste mit Vollständigkeit der Unterlagen'),
     h('thead', {}, h('tr', {},
       ['Unterlagen', 'Schaden-Nr.', 'Name', 'Geburtsdatum', 'Unfalldatum', 'Falltyp', 'Leistungserbringer', 'Arbeitgeber', 'Sachbearbeitung']
-        .map((t) => h('th', { scope: 'col' }, t)))),
+        .map((t, i) => h('th', { scope: 'col', class: i >= 7 ? 'spalte-optional' : null }, t)))), // optional: auf schmalen Bildschirmen ausgeblendet, im Falldetail sichtbar
   );
   const aktualisieren = () => {
     const { tbody, anzahl } = tabellenKoerper(d.faelle, d.dokumente);
@@ -143,8 +143,8 @@ export function renderFallliste(container, ctx) {
   const einstieg = !d.dokumente.length && !meldungsBox
     ? h('div', { class: 'hinweis hinweis--info' },
       h('strong', {}, 'So geht’s: '),
-      'Die Fälle stammen aus der Excel-Liste ', h('span', { class: 'mono' }, quelle?.name ?? 'faelle.xlsx'), '. ',
-      'Im ', h('a', { href: '#/eingang' }, 'Posteingang'), ' den Demo-Posteingang laden: Die App liest jeden Arztbericht, ordnet ihn dem richtigen Fall zu und zeigt hier, welche Unterlagen noch fehlen.')
+      'Fälle aus ', h('span', { class: 'mono' }, quelle?.name ?? 'faelle.xlsx'), '. ',
+      'Im ', h('a', { href: '#/eingang' }, 'Posteingang'), ' Berichte laden – die App ordnet sie zu und zeigt hier, was fehlt.')
     : null;
 
   aktualisieren();

@@ -22,8 +22,8 @@ export function renderKennzahlen(ziel, faelle, dokumente) {
     kachel('Dokumente total', zahl(k.total), k.duplikate ? `${zahl(k.eindeutig)} ohne Duplikate` : 'im Posteingang'),
     kachel('Automatisch zugeordnet', k.eindeutig ? `${prozent} %` : '–', `${zahl(k.automatisch)} von ${zahl(k.eindeutig)} Dokumenten`,
       h('span', { class: 'kpi__meter' }, fuellung)),
-    kachel('Offen in Triage', zahl(k.offen), 'Vorschläge, Widersprüche, Triage'),
-    kachel('Abgefangene Duplikate', zahl(k.duplikate), 'mehrfach gesendete Berichte'),
+    kachel('Offen in Triage', zahl(k.offen), 'warten auf Entscheid'),
+    kachel('Abgefangene Duplikate', zahl(k.duplikate), 'mehrfach gesendet'),
     kachel('Unvollständige Fälle', zahl(k.unvollstaendig), `von ${zahl(k.faelleMitCheckliste)} Fällen`),
   ));
 }

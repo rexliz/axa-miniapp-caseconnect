@@ -1,7 +1,9 @@
-// Ansicht «Dokument»: Originaltext mit Markierungen, erkannte Merkmale, Kandidaten mit Score und Aktionen.
+// Ansicht «Dokument»: Originaltext mit Markierungen, Kandidaten mit Score und Aktionen, Quittung, erkannte Merkmale.
+// Die Entscheidung (Kandidaten) steht bewusst oben rechts, damit sie auch auf kleinen Bildschirmen sofort sichtbar ist.
 import { aendern, aktiv } from '../state.js';
 import { DOKUMENTTYPEN } from '../config.js';
 import { formatCh, formatChZeit } from '../core/dates.js';
+import { naechstesOffenes } from '../core/kpis.js';
 import { h, statusBadge, toast } from './dom.js';
 import { quittungsKarte } from './receipt.js';
 
@@ -104,12 +106,12 @@ function kandidatenKarte(d, faelleNachNr) {
     if (offen) {
       aktion = h('button', {
         type: 'button',
-        class: i === 0 && d.status === 'vorschlag' ? 'btn' : 'btn btn--secondary',
+        class: 'btn btn--secondary',
         onclick: () => {
           if (widerspruch && !window.confirm('Name oder Geburtsdatum widersprechen diesem Fall. Wirklich zuordnen?')) return;
           zuordnen(d.id, k.schaden_nr, i === 0 && d.status === 'vorschlag' ? 'bestaetigt' : 'manuell');
         },
-      }, i === 0 && d.status === 'vorschlag' ? 'Vorschlag bestätigen' : widerspruch ? 'Trotzdem zuordnen' : 'Diesem Fall zuordnen');
+      }, widerspruch ? 'Trotzdem zuordnen' : 'Diesem Fall zuordnen'); // «Vorschlag bestätigen» steht prominent oben im Hinweis
     }
     return h('li', { class: `kandidat${istZugeordnet ? ' is-zugeordnet' : ''}` },
       h('div', { class: 'kandidat__kopf' },
@@ -123,7 +125,7 @@ function kandidatenKarte(d, faelleNachNr) {
   });
   return h('section', { class: 'card', 'aria-labelledby': 'h-kandidaten' },
     h('h2', { id: 'h-kandidaten' }, 'Kandidaten'),
-    h('p', { class: 'begruendung' }, d.begruendung),
+    d.zuordnung ? h('p', { class: 'begruendung' }, d.begruendung) : null, // bei offenen Dokumenten steht die Begründung oben im Hinweis
     karten.length ? h('ol', { class: 'kandidaten' }, karten) : h('p', { class: 'muted' }, 'Kein Fall hat übereinstimmende Merkmale.'));
 }
 
@@ -154,14 +156,24 @@ function weitereAktionen(d, faelle) {
 export function renderDokument(container, id) {
   const ds = aktiv();
   const d = ds.dokumente.find((x) => x.id === id);
-  const zurueck = h('p', { class: 'zurueck' }, h('a', { href: '#/eingang' }, '← Zum Posteingang'));
+  const zurueckLink = h('a', { href: '#/eingang' }, '← Zum Posteingang');
   if (!d) {
+    const zurueck = h('p', { class: 'zurueck' }, zurueckLink);
     container.replaceChildren(zurueck, h('h1', {}, 'Dokument nicht gefunden'), h('p', {}, 'Im aktiven Datensatz gibt es dieses Dokument nicht (mehr).'));
     return;
   }
   const faelleNachNr = new Map(ds.faelle.map((f) => [f.schaden_nr, f]));
   const original = d.duplikat_von ? ds.dokumente.find((x) => x.id === d.duplikat_von) : null;
   const fall = d.zuordnung ? faelleNachNr.get(d.zuordnung.schaden_nr) : null;
+
+  // Arbeitsliste: direkt zum nächsten offenen Dokument, ohne Umweg über den Posteingang
+  const weiter = naechstesOffenes(ds.dokumente, d.id);
+  const navigation = h('nav', { class: 'dok-nav', 'aria-label': 'Dokument-Navigation' },
+    zurueckLink,
+    weiter.dokument
+      ? h('a', { href: `#/dokument/${weiter.dokument.id}`, id: 'naechstes-offenes' },
+        `Nächstes offenes Dokument (${weiter.anzahl} offen) →`)
+      : h('span', { class: 'muted' }, 'Keine weiteren offenen Dokumente'));
 
   const hinweise = [];
   if (original) {
@@ -172,18 +184,31 @@ export function renderDokument(container, id) {
   } else if (d.zuordnung) {
     hinweise.push(h('div', { class: 'hinweis hinweis--ok', role: 'status' },
       h('strong', {}, `Zugeordnet zu ${d.zuordnung.schaden_nr}${fall ? ` (${fall.vorname} ${fall.nachname})` : ''}`),
-      ` – ${ART_TEXT[d.zuordnung.art]} am ${formatChZeit(d.zuordnung.zeitpunkt)}.`));
+      ` – ${ART_TEXT[d.zuordnung.art]} am ${formatChZeit(d.zuordnung.zeitpunkt)}. `,
+      d.eingangs_id ? ['Empfangsbestätigung ', h('span', { class: 'mono nowrap' }, d.eingangs_id), ' · ',
+        h('a', { href: `#/quittung/${d.id}` }, 'Quittung öffnen')] : null));
   } else if (d.status === 'widerspruch') {
     hinweise.push(h('div', { class: 'hinweis hinweis--fehler', role: 'status' }, h('strong', {}, 'Widerspruch – bitte prüfen. '), d.begruendung));
+  } else if (d.status === 'vorschlag' && !d.manuelleTriage && d.kandidaten[0]) {
+    // Hauptaktion oben, damit sie ohne Scrollen erreichbar ist; danach erscheint hier die Empfangsbestätigung
+    const top = d.kandidaten[0];
+    const topFall = faelleNachNr.get(top.schaden_nr);
+    hinweise.push(h('div', { class: 'hinweis hinweis--warnung hinweis--aktion', role: 'status' },
+      h('div', {}, h('strong', {}, `Vorschlag: ${top.schaden_nr}${topFall ? ` (${topFall.vorname} ${topFall.nachname})` : ''}. `), d.begruendung),
+      h('button', { type: 'button', class: 'btn', id: 'vorschlag-bestaetigen', onclick: () => zuordnen(d.id, top.schaden_nr, 'bestaetigt') }, 'Vorschlag bestätigen')));
+  } else if (d.status !== 'duplikat') {
+    hinweise.push(h('div', { class: 'hinweis hinweis--warnung', role: 'status' },
+      h('strong', {}, d.manuelleTriage ? 'Liegt in der manuellen Triage. ' : 'Keine eindeutige Zuordnung – bitte prüfen. '), d.begruendung));
   }
 
   container.replaceChildren(
-    zurueck,
+    navigation,
     h('div', { class: 'view-head' },
       h('div', {},
-        h('h1', {}, DOKUMENTTYPEN[d.extraktion.dokumenttyp]?.label ?? 'Dokument (Typ nicht erkannt)'),
-        h('p', { class: 'muted' }, `${d.absender || 'Absender unbekannt'} · ${d.dateiname} · eingegangen ${formatChZeit(d.eingegangen_am)}${d.eingangs_id ? ` · ${d.eingangs_id}` : ''}`)),
-      h('div', { class: 'actions' }, statusBadge(d))),
+        h('div', { class: 'titelzeile' },
+          h('h1', {}, DOKUMENTTYPEN[d.extraktion.dokumenttyp]?.label ?? 'Dokument (Typ nicht erkannt)'),
+          statusBadge(d)),
+        h('p', { class: 'muted' }, `${d.absender || 'Absender unbekannt'} · ${d.dateiname} · eingegangen ${formatChZeit(d.eingegangen_am)}${d.eingangs_id ? ` · ${d.eingangs_id}` : ''}`))),
     ...hinweise,
     h('div', { class: 'dok-raster' },
       h('section', { class: 'card dok-text', 'aria-labelledby': 'h-original' },
@@ -191,9 +216,9 @@ export function renderDokument(container, id) {
         legende(d.extraktion.fundstellen),
         markierterText(d.text, d.extraktion.fundstellen)),
       h('div', { class: 'dok-seite' },
+        d.status !== 'duplikat' ? kandidatenKarte(d, faelleNachNr) : null,
         quittungsKarte(d),
         merkmale(d),
-        d.status !== 'duplikat' ? kandidatenKarte(d, faelleNachNr) : null,
         weitereAktionen(d, ds.faelle))),
   );
 }

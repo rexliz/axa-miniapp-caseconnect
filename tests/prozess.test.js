@@ -6,7 +6,7 @@ import { verarbeiteAlle } from '../src/js/core/pipeline.js';
 import { vollstaendigkeit } from '../src/js/core/completeness.js';
 import { quittung, quittungAlsText } from '../src/js/core/receipt.js';
 import { nachforderungen, briefAlsText } from '../src/js/core/request.js';
-import { kennzahlen } from '../src/js/core/kpis.js';
+import { kennzahlen, naechstesOffenes } from '../src/js/core/kpis.js';
 import { zuordnungenAlsCsv, EXPORT_SPALTEN } from '../src/js/core/export.js';
 import { tabelleLesen } from '../src/js/io/cases.js';
 
@@ -68,6 +68,17 @@ test('Kennzahlen nach dem Demo-Posteingang', () => {
     { total: 10, duplikate: 1, automatisch: 5, offen: 4, unvollstaendig: 11 },
   );
   assert.equal(Math.round(k.anteilAutomatisch * 100), 56);
+});
+
+test('Arbeitsliste: nächstes offenes Dokument (Vorschlag, Widerspruch, Triage), am Ende wieder von vorne', () => {
+  const offeneIds = dokumente.filter((d) => !d.zuordnung && d.status !== 'duplikat').map((d) => d.id);
+  assert.deepEqual(offeneIds, ['D0005', 'D0006', 'D0007', 'D0008']);
+  assert.deepEqual(naechstesOffenes(dokumente, 'D0007').dokument.id, 'D0008'); // Widerspruch → Vorschlag (Demo-Ablauf)
+  assert.equal(naechstesOffenes(dokumente, 'D0007').anzahl, 3);
+  assert.equal(naechstesOffenes(dokumente, 'D0003').dokument.id, 'D0005'); // von einem zugeordneten Dokument aus
+  assert.equal(naechstesOffenes(dokumente, 'D0008').dokument.id, 'D0005'); // nach dem letzten wieder von vorne
+  const nurEins = dokumente.map((d) => (d.id === 'D0005' ? d : { ...d, zuordnung: d.zuordnung ?? { schaden_nr: 'X', art: 'manuell' } }));
+  assert.deepEqual(naechstesOffenes(nurEins, 'D0005'), { dokument: null, anzahl: 0 });
 });
 
 test('Kennzahlen Volumen-Datensatz: realistische Werte', async () => {

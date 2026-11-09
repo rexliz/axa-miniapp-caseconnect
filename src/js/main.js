@@ -10,8 +10,6 @@ import { renderDokument } from './ui/document.js';
 import { anzeigeStatus } from './ui/dom.js';
 import { renderQuittung } from './ui/receipt.js';
 import { renderKennzahlen } from './ui/kpis.js';
-import { zuordnungenAlsCsv } from './core/export.js';
-import { tagesSchluessel } from './core/dates.js';
 
 const main = /** @type {HTMLElement} */ (document.getElementById('main'));
 const nav = /** @type {HTMLElement} */ (document.getElementById('main-nav'));
@@ -57,24 +55,6 @@ const ROUTEN = [
   { muster: /^#\/dokument\/(.+)$/, nav: 'eingang', ansicht: (c, m) => renderDokument(c, decodeURIComponent(m[1])) },
   { muster: /^#\/quittung\/(.+)$/, nav: 'eingang', ansicht: (c, m) => renderQuittung(c, decodeURIComponent(m[1])) },
 ];
-
-/** Zuordnungen des aktiven Datensatzes als CSV herunterladen. */
-function exportieren() {
-  const d = aktiv();
-  if (!d.dokumente.length) {
-    toast('Noch keine Dokumente – zuerst den Posteingang laden.');
-    return;
-  }
-  const blob = new Blob([zuordnungenAlsCsv(d.dokumente)], { type: 'text/csv;charset=utf-8' });
-  const url = URL.createObjectURL(blob);
-  const heute = tagesSchluessel(new Date().toISOString()); // lokales Datum JJJJMMTT
-  const a = h('a', { href: url, download: `caseconnect-zuordnungen-${zustandLesen().datensatz}-${heute}.csv`, class: 'visually-hidden' });
-  document.body.append(a);
-  a.click();
-  a.remove();
-  window.setTimeout(() => URL.revokeObjectURL(url), 1000);
-  toast(`${d.dokumente.length} Zuordnungen als CSV exportiert.`);
-}
 
 function aktuelleRoute() {
   const hash = window.location.hash || '#/faelle';
@@ -126,8 +106,7 @@ function renderWerkzeuge() {
       toast('Demo zurückgesetzt.');
     },
   }, 'Demo zurücksetzen');
-  const exportKnopf = h('button', { type: 'button', class: 'btn btn--ghost', onclick: exportieren }, 'Export CSV');
-  werkzeuge.replaceChildren(auswahl, exportKnopf, reset);
+  werkzeuge.replaceChildren(auswahl, reset);
 }
 
 async function wechsleDatensatz(key) {
